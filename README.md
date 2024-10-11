@@ -3,9 +3,8 @@
 
 ## Getting started
 
-* To build: `docker build -t neovim .`
+* To build: `docker build -t neovim --build-arg UID=$(id -u) --build-arg GID=$(id -g) .`
 
 * To run:
-    *  `docker run --rm -v /home/drc/Desktop/docker/neovim-docker:/drc -u $(id -u):$(id -g) -it neovim`
+    *  `docker run --rm -v /home/drc/Desktop/docker/neovim-docker:/drc -it neovim`
         * `-v`: Volume
-        * `-u`: Set user id to be the same as the running user
