@@ -1,4 +1,3 @@
-
 FROM ubuntu:24.10
 
 # --- Package Installation --- #
@@ -20,13 +19,16 @@ ENV HOME /home/${UNAME}
 # --- Plugins --- #
 # Install Plug
 RUN curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-# Copy config file
-COPY --chown=${UID}:${GID} init.vim ${HOME}/.config/nvim/
+# Copy plugins config file
+COPY --chown=${UID}:${GID} plugins.vim ${HOME}/.config/nvim/init.vim
 # Install plugins
 RUN nvim --headless +PlugInstall +qall
 RUN nvim --headless +'CocInstall -sync coc-html coc-sh coc-rust-analyzer coc-pyright coc-markdown coc-json coc-clangd ' +qall
 # Plugin setup
 RUN mkdir -p ${HOME}/.config/nvim/other
+# Copy normal config file
+COPY --chown=${UID}:${GID} configs.vim ${HOME}/.config/nvim/
+RUN cat ${HOME}/.config/nvim/configs.vim >> ${HOME}/.config/nvim/init.vim && rm ${HOME}/.config/nvim/configs.vim
 
 # Use bash as the entrypoint. Will require adding nvim as an argument
 #   This is given to add more flexibility when running the container

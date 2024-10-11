@@ -222,36 +222,7 @@ autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 
 
 "### Plugins ###
-call plug#begin('~/.nvim/plugged')
-" The default plugin directory will be as follows:
-"   - Vim (Linux/macOS): '~/.vim/plugged'
-"   - Vim (Windows): '~/vimfiles/plugged'
-"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
-" You can specify a custom plugin directory by passing it as the argument
-"   - e.g. `call plug#begin('~/.vim/plugged')`
-"   - Avoid using standard Vim directory names like 'plugin'
-
-
-" YouCompleteMe - Autocompletion
-"Plug 'valloric/youcompleteme'
-"let g:ycm_enable_diagnostic_signs = 0
-"let g:ycm_enable_diagnostic_highlighting = 0
-"let g:ycm_show_diagnostics_ui = 0
-"let g:ycm_echo_current_diagnostic = 0
-"let g:ycm_key_list_select_completion = ['<TAB>']
-"let g:ycm_key_list_previous_completion = ['<S-TAB>']
-"let g:ycm_key_list_stop_completion = ['<C-y>', '<Up>', '<Down>']
-"let g:ycm_autoclose_preview_window_after_insertion = 1
-"set splitbelow
-"" Youcompleteme, close preview window automatically
-"let g:ycm_autoclose_preview_window_after_insertion = 1
-"let g:ycm_autoclose_preview_window_after_completion = 1
-"" Disable Youcompleteme with python
-""let g:ycm_filetype_blacklist = {'python': 1}
-""let g:yvm_semantic_triggers = {'python': []}
-
 " Colorful Parenthesis
-Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1
 
 """ HTML """
@@ -262,18 +233,15 @@ let g:rainbow_active = 1
 " * Child tags: `div>p>a,,` Will exapand to <div><p><a...
 "   * To make many items in an item: `ul>li*5,,`
 " * Use `.` for class and `#` for id: `div.container>p#foo>a,,`
-Plug 'mattn/emmet-vim'
 let g:user_emmet_leader_key=','
 " Close tags via `>`
 "   Use `>>` to put close tag on new line
-Plug 'alvan/vim-closetag'
 
 " Python-Mode
 " * Run Code: <leader>r
 " * Add/Remove Break Point: <leader>b
 " * Search Documentation: <leader>K
 " * HELP: `:help pymode`
-Plug 'klen/python-mode'
 let g:pymode_lint = 1
 let g:pymode_lint_on_write = 1
 "autocmd FileType python setlocal nonumber
@@ -296,18 +264,15 @@ let g:pymode_trim_whitespaces = 1  "Trim unused white space at end of lines
 "   * Move to location of the error: `<Ctrl>`
 "   * Fix the error automatically: `f`
 "   * Mote to next/previous: `n`/`p`
-Plug 'rhysd/vim-grammarous'
 
 " Pretty break indention
 set breakindent
 
 " Javascript
-Plug 'pangloss/vim-javascript'
 let g:javascript_plugin_jsdoc = 1 " Syntax highlighting
 let g:javascript_plugin_flow = 1 " Flow syntax highlighting
 
 " Linter
-Plug 'dense-analysis/ale'
 let g:ale_linters = {
 \    'rust': ['analyzer'],
 \    'javascript': ['eslint'],
@@ -322,7 +287,6 @@ let g:ale_lint_on_text_changed = "normal"
 let g:ale_lint_delay = 5
 
 """ Coc.nvim (Auto Complete) """
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Find coc config files at: https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions#implemented-coc-extensions
 
 " Use tab for trigger completion with characters ahead and navigate.
@@ -459,11 +423,6 @@ nnoremap <silent><nowait> ck  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> cp  :<C-u>CocListResume<CR>
 
 
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-Plug 'junegunn/fzf'
 set hidden " Required for operations modifying multiple buffers like rename.
 
 """ END COC """
@@ -472,52 +431,33 @@ set hidden " Required for operations modifying multiple buffers like rename.
 let g:LanguageClient_serverCommands = {
 \ 'rust': ['rust-analyzer'],
 \ }
-Plug 'neovim/nvim-lspconfig'
 
 
-Plug 'rust-lang/rust.vim'
 let g:rustfmt_autosave = 1
 
 """"""
 
 " Colorscheme
-Plug 'crucerucalin/peaksea.vim'
-"set background=dark
-"colorscheme peaksea
+set background=dark
+colorscheme peaksea
 
 " Status bar
-"Plug 'vim-airline/vim-airline'
 "let g:airline#extensions#ale#enabled = 1  " Move errors to status bar
 
-
-" Testing (TODO)
-"Plug 'nvim-lua/plenary.nvim'
-"Plug 'nvim-treesitter/nvim-treesitter'
-"Plug 'antoinemadec/FixCursorHold.nvim'
-"Plug 'nvim-neotest/neotest'
-
-" Surround (TODO)
-Plug 'tpope/vim-surround'
-
-" Parenthesis
-Plug 'chun-yang/auto-pairs'
 
 " MRU Plugin - Most Recently Used files
 " <leader>f to open recently used files search. 
 "   Enter to open or "O" to open vertically split
-Plug 'yegappan/mru'
 let MRU_File = '~/.config/nvim/other/vim_mru_files'
 let MRU_Max_Entries = 400
 map <leader>f :MRU<CR>
 
 " YankStack
 " Use Ctrl+p and Ctrl+n to cycle through paste options
-Plug 'maxbrunsfeld/vim-yankstack'
 nmap <C-p> <Plug>yankstack_substitute_older_paste
 nmap <C-n> <Plug>yankstack_substitute_newer_paste
 
 " BufExplorer - Find files in buffer
-Plug 'jlanzarotta/bufexplorer'
 let g:bufExplorerDefaultHelp=0
 let g:bufExplorerShowRelativePath=1
 let g:bufExplorerFindActive=1
@@ -525,7 +465,6 @@ let g:bufExplorerSortBy='name'
 map <leader>o :BufExplorer<cr>
 
 " CTRL-P - Open files in buffer
-Plug 'ctrlpvim/ctrlp.vim'
 let g:ctrlp_working_path_mode = 0
 " Quickly find and open a file in the current working directory
 let g:ctrlp_map = '<C-f>'
@@ -533,11 +472,7 @@ map <leader>j :CtrlP<cr>
 let g:ctrlp_max_height = 20
 let g:ctrlp_custom_ignore = 'node_modules\|^\.DS_Store\|^\.git\|^\.coffee'
 
-" snipMate (TODO, use for html tags)
-"Plug 'msanders/snipmate.vim'
-
 " Nerd tree - Show directories
-Plug 'preservim/nerdtree'
 let g:NERDTreeWinPos = "right"
 let NERDTreeShowHidden=0
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
@@ -546,11 +481,8 @@ map <leader>nn :NERDTreeToggle<cr>
 map <leader>nb :NERDTreeFromBookmark<Space>
 map <leader>nf :NERDTreeFind<cr>
 
-" Vim-Multi-Cursors
-"Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 " Lightline - Status line
-Plug 'itchyny/lightline.vim'
 
 function! CocCurrentFunction()
     return get(b:, 'coc_current_function', '')
@@ -584,20 +516,16 @@ let g:lightline = {
 autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 
 " Show git changes
-Plug 'airblade/vim-gitgutter'
 let g:gitgutter_enabled=0
 " Use <leader>g to show git changes
 nnoremap <silent> <leader>g :GitGutterToggle<cr>
 
 " Fugitive - Git (Remove?)
-Plug 'tpope/vim-fugitive'
 nnoremap <leader>v :.GBrowse!<CR>
 xnoremap <leader>v :'<'>GBrowse!<CR>
 
 " Universal Ctags - Helps neovim find ctags. Might need compiling: https://github.com/universal-ctags/ctags#how-to-build-and-install
-Plug 'universal-ctags/ctags'
 " Auto create/update Ctags
-Plug 'ludovicchabant/vim-gutentags'
 " Gutentags
 " Don't load me if there's no ctags file
 if !executable('ctags')
@@ -605,18 +533,13 @@ if !executable('ctags')
 endif
 
 " Clang-format
-Plug 'rhysd/vim-clang-format'
 autocmd FileType c ClangFormatAutoEnable
 let g:clang_format#auto_format=1
 
 " Better C++ highlighting                                                                                                                                                                                                                     
-Plug 'jackguo380/vim-lsp-cxx-highlight'
 let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1
-
-" Initialize plugin system
-call plug#end()
 
 """ Moving Around """
 " Split using ctrl+shift+v or ctrl+shift+s
@@ -649,8 +572,3 @@ autocmd VimEnter *
   \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   \|   PlugInstall --sync | q
   \| endif
-
-
-" Colorscheme
-set background=dark
-colorscheme peaksea
