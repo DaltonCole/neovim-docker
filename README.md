@@ -1,5 +1,7 @@
 # neovim-docker
 
+This builds a docker container for the use of neovim + plugins. It is assumed that CoC will be used as a plugin. If this is not the case, comment out the "CocInstall" line in the Dockerfile.
+
 ## Getting started
 
 * To build: `docker build -t neovim --build-arg UID=$(id -u) --build-arg GID=$(id -g) .`
