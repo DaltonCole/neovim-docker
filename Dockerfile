@@ -26,8 +26,8 @@ COPY init.vim /root/.config/nvim/
 RUN nvim --headless +PlugInstall +qall
 RUN mkdir -p /root/.config/nvim/other
 RUN apt install -y npm
-#RUN nvim --headless +'CocInstall coc-html coc-sh coc-rust-analyzer coc-python coc-pyright coc-markdown coc-json coc-clangd ' +qall
-RUN nvim --headless +"CocInstall -sync coc-pyright" +qall
+RUN nvim --headless +'CocInstall -sync coc-html coc-sh coc-rust-analyzer coc-pyright coc-markdown coc-json coc-clangd ' +qall
+#RUN nvim --headless +"CocInstall -sync coc-pyright" +qall
 #RUN nvim --headless +'CocInstall coc-pyright coc-python' +qall
 
 
