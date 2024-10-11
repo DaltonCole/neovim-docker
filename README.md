@@ -21,7 +21,10 @@ neovim() {
     VOL=/system
     CD_DIR=/${VOL}/$(pwd)
     VIM_DIR=/${VOL}/$(readlink -f $1)
-    docker run --rm -v /:/${VOL} -it neovim "cd ${CD_DIR} && nvim ${VIM_DIR}"
+    docker run --rm \
+        -v /:/${VOL} \
+        -v undo-dir:/home/docker/.config/nvim/undodir \
+        -it neovim "cd ${CD_DIR} && nvim ${VIM_DIR}"
 }
 alias n="neovim"
 alias vim="neovim"
