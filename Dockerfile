@@ -1,20 +1,14 @@
 
 FROM ubuntu:24.10
 
+# --- Package Installation --- #
 # Update packages
 RUN apt-get -y update && apt-get -y upgrade
 # Install neovim and dependencies
-RUN apt-get install -y python3 python3-neovim git-all
-#RUN apt-get install python-dev
-#RUN apt-get install python-pip
-#RUN apt-get install python3-dev
-#RUN apt-get install python3-pip
 RUN curl -sL install-node.vercel.app/lts | bash # nodejs - coc requirement
-RUN apt-get install -y nodejs npm
-#RUN apt install -y npm
-RUN apt-get install -y curl
+RUN apt-get install -y python3 python3-neovim git-all nodejs npm curl
 
-# Add a user
+# --- Add a user --- #
 ARG UNAME=docker
 ARG UID=1000
 ARG GID=1000
@@ -22,9 +16,6 @@ RUN groupadd -g $GID -o $UNAME
 RUN useradd -m -u $UID -g $GID -o -s /bin/bash $UNAME
 USER $UNAME
 ENV HOME /home/${UNAME}
-
-# Set the working directory
-#WORKDIR /neovim
 
 # --- Plugins --- #
 # Install Plug
@@ -37,5 +28,6 @@ RUN nvim --headless +'CocInstall -sync coc-html coc-sh coc-rust-analyzer coc-pyr
 # Plugin setup
 RUN mkdir -p ${HOME}/.config/nvim/other
 
-
-CMD ["bash"]
+# Use bash as the entrypoint. Will require adding nvim as an argument
+#   This is given to add more flexibility when running the container
+ENTRYPOINT [ "/bin/bash", "-l", "-c" ]
