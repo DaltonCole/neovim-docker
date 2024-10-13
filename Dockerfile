@@ -30,6 +30,16 @@ RUN mkdir -p ${HOME}/.config/nvim/other
 COPY --chown=${UID}:${GID} nvim/configs.vim ${HOME}/.config/nvim/
 RUN cat ${HOME}/.config/nvim/configs.vim >> ${HOME}/.config/nvim/init.vim && rm ${HOME}/.config/nvim/configs.vim
 
+# Copy coc-settings.json file
+COPY --chown=${UID}:${GID} nvim/coc-settings.json ${HOME}/.config/nvim/
+
+# Get local conda environment to work inside of container
+ARG LOCAL_UNAME
+ARG LOCAL_SYSTEM_VOL=system
+USER root
+run ln -s /${LOCAL_SYSTEM_VOL}/home/$LOCAL_UNAME /home/$LOCAL_UNAME
+USER $UNAME
+
 # Use bash as the entrypoint. Will require adding nvim as an argument
 #   This is given to add more flexibility when running the container
 ENTRYPOINT [ "/bin/bash", "-l", "-c" ]

@@ -4,7 +4,7 @@ This builds a docker container for the use of neovim + plugins. It is assumed th
 
 ## Getting started
 
-* To build: `docker build -t neovim --build-arg UID=$(id -u) --build-arg GID=$(id -g) .`
+* To build: `docker build -t neovim --build-arg UID=$(id -u) --build-arg GID=$(id -g) --build-arg LOCAL_UNAME=$(whoami) .`
     * This will create a docker container with the `neovim` tag
 
 * To run:
@@ -21,10 +21,11 @@ neovim() {
     VOL=/system
     CD_DIR=/${VOL}/$(pwd)
     VIM_DIR=/${VOL}/$(readlink -f $1)
+    PYTHON_PATH=$(dirname $(which python))
     docker run --rm \
         -v /:/${VOL} \
         -v undo-dir:/home/docker/.config/nvim/undodir \
-        -it neovim "cd ${CD_DIR} && nvim ${VIM_DIR}"
+        -it neovim "export PATH=\"${PYTHON_PATH}:$PATH\" && cd ${CD_DIR} && nvim ${VIM_DIR}"
 }
 alias n="neovim"
 alias vim="neovim"
