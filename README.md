@@ -17,15 +17,25 @@ This builds a docker container for the use of neovim + plugins. It is assumed th
 
 ```
 # Docker alias
+neovim_start_container() {
+    VOL=/system
+    docker run --rm \
+        -v /:/${VOL} \
+        -v undo-dir:/home/docker/.config/nvim/undodir \
+        -td neovim "bash" > /dev/null
+}
 neovim() {
+    CONTAINER_ID=$(docker ps -q --filter ancestor=neovim | tail -1)
+    if [ -z "${CONTAINER_ID}" ]; then
+        neovim_start_container
+        CONTAINER_ID=$(docker ps -q --filter ancestor=neovim | tail -1)
+    fi
+
     VOL=/system
     CD_DIR=/${VOL}/$(pwd)
     VIM_DIR=/${VOL}/$(readlink -f $1)
     PYTHON_PATH=$(dirname $(which python))
-    docker run --rm \
-        -v /:/${VOL} \
-        -v undo-dir:/home/docker/.config/nvim/undodir \
-        -it neovim "export PATH=\"${PYTHON_PATH}:$PATH\" && cd ${CD_DIR} && nvim ${VIM_DIR}"
+    docker exec -it ${CONTAINER_ID} /bin/bash -l -c "export PATH=\"${PYTHON_PATH}:$PATH\" && cd ${CD_DIR} && nvim ${VIM_DIR}"
 }
 alias n="neovim"
 alias vim="neovim"
