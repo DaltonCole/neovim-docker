@@ -34,7 +34,7 @@ neovim() {
     VOL=/system
     CD_DIR=/${VOL}/$(pwd)
     VIM_DIR=/${VOL}/$(readlink -f $1)
-    PYTHON_PATH=$(dirname $(which python))
+    PYTHON_PATH=$(dirname $(which python) 2> /dev/null)
     docker exec -it ${CONTAINER_ID} /bin/bash -l -c "export PATH=\"${PYTHON_PATH}:$PATH\" && cd ${CD_DIR} && nvim ${VIM_DIR}"
 }
 alias n="neovim"
