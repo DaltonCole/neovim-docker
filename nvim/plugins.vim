@@ -48,7 +48,7 @@ Plug 'alvan/vim-closetag'
 " * Add/Remove Break Point: <leader>b
 " * Search Documentation: <leader>K
 " * HELP: `:help pymode`
-Plug 'klen/python-mode'
+"Plug 'klen/python-mode'
 
 " Grammar Check
 " * To Run: `:GrammarousCheck`
@@ -101,7 +101,7 @@ Plug 'tpope/vim-surround'
 Plug 'chun-yang/auto-pairs'
 
 " MRU Plugin - Most Recently Used files
-" <leader>f to open recently used files search. 
+" <leader>f to open recently used files search.
 "   Enter to open or "O" to open vertically split
 Plug 'yegappan/mru'
 
@@ -143,6 +143,9 @@ Plug 'rhysd/vim-clang-format'
 
 " Better C++ highlighting
 Plug 'jackguo380/vim-lsp-cxx-highlight'
+
+" Better notifications - notifications in the bottom right corner of vim
+Plug 'j-hui/fidget.nvim'
 
 " Initialize plugin system
 call plug#end()

@@ -80,7 +80,7 @@ set magic      " Use regular expressions in search
 " Space to search
 map <space> /
 " Use Ctrl-Space to backwards search
-map <C-space> ? 
+map <C-space> ?
 
 " Don't redraw while executing macros
 set lazyredraw
@@ -195,7 +195,7 @@ vnoremap $1 <esc>`>a)<esc>`<i(<esc>
 vnoremap $2 <esc>`>a]<esc>`<i[<esc>
 vnoremap $3 <esc>`>a}<esc>`<i{<esc>
 vnoremap $$ <esc>`>a"<esc>`<i"<esc>
-vnoremap $q <esc>`>a'<esc>`<i'<esc> 
+vnoremap $q <esc>`>a'<esc>`<i'<esc>
 vnoremap $e <esc>`>a`<esc>`<i`<esc>
 " Auto complete (, ", ', [, {
 inoremap $1 ()<esc>i
@@ -242,20 +242,20 @@ let g:user_emmet_leader_key=','
 " * Add/Remove Break Point: <leader>b
 " * Search Documentation: <leader>K
 " * HELP: `:help pymode`
-let g:pymode_lint = 1
-let g:pymode_lint_on_write = 1
-"autocmd FileType python setlocal nonumber
-let g:pymode_lint_ignore = ["E501", "E402"]  " Ignore: Line length limit, module import not at top of file
-let g:pymode_lint_cwindow = 0  " Do not open preview window for PEP errors
-let g:pymode_options_colorcolumn = 0  " No colored column at max line length
-let g:pymode_indent = 1  " PEP8-Compatible python indent
-let g:pymode_doc = 1  " Show pydoc documentation
-"let g:pymode_options_max_line_length = 120
-"let g:pymode_lint_ignore = "E501"
-"let g:pep8_ignore="E501"
-"let g:pymode_lint_options_pep8 = {'max_line_length': 120}
-"let g:syntastic_python_pylint_post_args="--max-line-length=120"
-let g:pymode_trim_whitespaces = 1  "Trim unused white space at end of lines
+"let g:pymode_lint = 1
+"let g:pymode_lint_on_write = 1
+""autocmd FileType python setlocal nonumber
+"let g:pymode_lint_ignore = ["E501", "E402"]  " Ignore: Line length limit, module import not at top of file
+"let g:pymode_lint_cwindow = 0  " Do not open preview window for PEP errors
+"let g:pymode_options_colorcolumn = 0  " No colored column at max line length
+"let g:pymode_indent = 1  " PEP8-Compatible python indent
+"let g:pymode_doc = 1  " Show pydoc documentation
+""let g:pymode_options_max_line_length = 120
+""let g:pymode_lint_ignore = "E501"
+""let g:pep8_ignore="E501"
+""let g:pymode_lint_options_pep8 = {'max_line_length': 120}
+""let g:syntastic_python_pylint_post_args="--max-line-length=120"
+"let g:pymode_trim_whitespaces = 1  "Trim unused white space at end of lines
 
 " Grammar Check
 " * To Run: `:GrammarousCheck`
@@ -425,6 +425,8 @@ nnoremap <silent><nowait> cp  :<C-u>CocListResume<CR>
 
 set hidden " Required for operations modifying multiple buffers like rename.
 
+" Sort python imports on save
+autocmd BufWritePre *.py silent! :call CocAction('runCommand', 'python.sortImports')
 """ END COC """
 
 """ Rust """
@@ -446,7 +448,7 @@ colorscheme peaksea
 
 
 " MRU Plugin - Most Recently Used files
-" <leader>f to open recently used files search. 
+" <leader>f to open recently used files search.
 "   Enter to open or "O" to open vertically split
 let MRU_File = '~/.config/nvim/other/vim_mru_files'
 let MRU_Max_Entries = 400
@@ -536,10 +538,11 @@ endif
 autocmd FileType c ClangFormatAutoEnable
 let g:clang_format#auto_format=1
 
-" Better C++ highlighting                                                                                                                                                                                                                     
+" Better C++ highlighting
 let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1
+
 
 """ Moving Around """
 " Split using ctrl+shift+v or ctrl+shift+s
@@ -572,3 +575,10 @@ autocmd VimEnter *
   \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   \|   PlugInstall --sync | q
   \| endif
+
+" Better notifications - notifications in the bottom right corner of vim
+"lua <<EOF
+"require("fidget").setup {
+"  -- options
+"}
+"EOF
