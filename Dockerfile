@@ -7,6 +7,14 @@ RUN apt-get -y update && apt-get -y upgrade
 RUN curl -sL install-node.vercel.app/lts | bash # nodejs - coc requirement
 RUN apt-get install -y python3 python3-neovim git-all nodejs npm curl
 
+# Rust
+RUN rustup default stable
+
+# Node JS
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash && \
+    source ~/.bashrc && \
+    npm install node
+
 # --- Add a user --- #
 ARG UNAME=docker
 ARG UID=1000
@@ -26,6 +34,7 @@ RUN nvim --headless +PlugInstall +qall
 RUN nvim --headless +'CocInstall -sync coc-html coc-sh coc-rust-analyzer coc-pyright coc-markdown coc-json coc-clangd ' +qall
 # Plugin setup
 RUN mkdir -p ${HOME}/.config/nvim/other
+RUN mkdir -p ${HOME}/.config/nvim/undodir
 # Copy normal config file
 COPY --chown=${UID}:${GID} nvim/configs.vim ${HOME}/.config/nvim/
 RUN cat ${HOME}/.config/nvim/configs.vim >> ${HOME}/.config/nvim/init.vim && rm ${HOME}/.config/nvim/configs.vim

@@ -434,6 +434,24 @@ let g:LanguageClient_serverCommands = {
 \ 'rust': ['rust-analyzer'],
 \ }
 
+require('lspconfig').rust_analyzer.setup {
+  -- Other Configs ...
+  settings = {
+    ["rust-analyzer"] = {
+      -- Other Settings ...
+      procMacro = {
+        ignored = {
+            leptos_macro = {
+                -- optional: --
+                -- "component",
+                "server",
+            },
+        },
+      },
+    },
+  }
+}
+
 
 let g:rustfmt_autosave = 1
 
