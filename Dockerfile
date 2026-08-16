@@ -2,27 +2,31 @@ FROM ubuntu:24.10
 
 # --- Package Installation --- #
 # Update packages
-RUN apt-get -y update && apt-get -y upgrade
+#RUN apt-get -y update && apt-get -y upgrade
 # Install neovim and dependencies
 RUN curl -sL install-node.vercel.app/lts | bash # nodejs - coc requirement
-RUN apt-get install -y python3 python3-neovim git-all nodejs npm curl
+#RUN apt-get install -y python3 python3-neovim git-all nodejs npm curl
 
-# Rust
-RUN rustup default stable
+ENTRYPOINT [ "/bin/bash", "-l", "-c" ]
 
 # Node JS
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash && \
-    source ~/.bashrc && \
-    npm install node
+    export NVM_DIR="$HOME/.nvm" # && \
+    #npm install node
 
 # --- Add a user --- #
 ARG UNAME=docker
 ARG UID=1000
 ARG GID=1000
-RUN groupadd -g $GID -o $UNAME
-RUN useradd -m -u $UID -g $GID -o -s /bin/bash $UNAME
-USER $UNAME
-ENV HOME /home/${UNAME}
+RUN groupadd -g $GID -o docker
+RUN useradd -m -u $UID -g $GID -o -s /bin/bash docker
+USER docker
+ENV HOME /home/docker
+
+# --- User level installs --- #
+# Rust
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+RUN . "$HOME/.cargo/env" && rustup default nightly
 
 # --- Plugins --- #
 # Install Plug
@@ -47,7 +51,7 @@ ARG LOCAL_UNAME
 ARG LOCAL_SYSTEM_VOL=system
 USER root
 run ln -s /${LOCAL_SYSTEM_VOL}/home/$LOCAL_UNAME /home/$LOCAL_UNAME
-USER $UNAME
+USER docker
 
 # Use bash as the entrypoint. Will require adding nvim as an argument
 #   This is given to add more flexibility when running the container
